@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpyt08hhukwp5"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_d3sgk"]
+[ext_resource type="PackedScene" uid="uid://dvv1j1nmdj4et" path="res://scenes/Boid.tscn" id="2_ivsh2"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_d3sgk")
+
+[node name="Boid" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(945, 518)
+
+[node name="Boid2" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(1046, 489)
+
+[node name="Boid3" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(1184, 121)
+
+[node name="Boid4" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(307, 637)
+
+[node name="Boid5" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(1279, 958)
+
+[node name="Boid6" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(1423, 94)
+
+[node name="Boid7" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(691, 243)
+
+[node name="Boid8" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(320, 922)
+
+[node name="Boid9" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(1654, 775)
+
+[node name="Boid10" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(1589, 444)
+
+[node name="Boid11" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(1972, 301)
+
+[node name="Boid12" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(284, 8)
+
+[node name="Boid13" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(29, 367)
+
+[node name="Boid14" parent="." instance=ExtResource("2_ivsh2")]
+position = Vector2(560, 929)
