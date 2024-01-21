@@ -4,48 +4,39 @@
 [ext_resource type="PackedScene" uid="uid://dh1ltvja45grq" path="res://scenes/player.tscn" id="2_g0xw7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86cxv"]
-size = Vector2(20, 1080)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jju1f"]
-size = Vector2(1920, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ccfog"]
-size = Vector2(20, 1080)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mcioo"]
-size = Vector2(1920, 20)
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_d3sgk")
 num_boids = 40
 
 [node name="LeftBorder" type="StaticBody2D" parent="."]
-position = Vector2(2.08165e-12, 540)
 constant_linear_velocity = Vector2(10, 2.08165e-12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBorder"]
 shape = SubResource("RectangleShape2D_86cxv")
 
 [node name="TopBorder" type="StaticBody2D" parent="."]
-position = Vector2(960, 2.08165e-12)
 constant_linear_velocity = Vector2(2.08165e-12, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopBorder"]
 shape = SubResource("RectangleShape2D_jju1f")
 
 [node name="RightBorder" type="StaticBody2D" parent="."]
-position = Vector2(1920, 540)
 constant_linear_velocity = Vector2(-10, 2.08165e-12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightBorder"]
 shape = SubResource("RectangleShape2D_ccfog")
 
 [node name="BottomBorder" type="StaticBody2D" parent="."]
-position = Vector2(960, 1080)
 constant_linear_velocity = Vector2(2.08165e-12, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBorder"]
 shape = SubResource("RectangleShape2D_mcioo")
 
 [node name="player" parent="." instance=ExtResource("2_g0xw7")]
-position = Vector2(960, 836)

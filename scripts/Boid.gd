@@ -60,13 +60,13 @@ func calculate_position(player_body):
 	
 	# Adding up separation distances for boids within protected range
 	for boid in boids_in_protected_range:
-		sep_dist_x += self.position.x - boid.position.x
-		sep_dist_y += self.position.y - boid.position.y
+		sep_dist_x += position.x - boid.position.x
+		sep_dist_y += position.y - boid.position.y
 	
 	# Also avoiding the player, if visible
 	if player_body:
-		player_sep_dist_x += self.position.x - player_body.position.x
-		player_sep_dist_y += self.position.y - player_body.position.y
+		player_sep_dist_x += position.x - player_body.position.x
+		player_sep_dist_y += position.y - player_body.position.y
 	
 	# Getting average positions and velocities for boids in view
 	for boid in boids_in_visual_range:
@@ -81,32 +81,32 @@ func calculate_position(player_body):
 		y_pos_avg = y_pos_avg / num_boids_in_vision
 
 	# Separation velocity calcs
-	self.linear_velocity.x += sep_dist_x * separation_strength
-	self.linear_velocity.y += sep_dist_y * separation_strength
-	self.linear_velocity.x += player_sep_dist_x * player_separation_strength
-	self.linear_velocity.y += player_sep_dist_y * player_separation_strength
+	linear_velocity.x += sep_dist_x * separation_strength
+	linear_velocity.y += sep_dist_y * separation_strength
+	linear_velocity.x += player_sep_dist_x * player_separation_strength
+	linear_velocity.y += player_sep_dist_y * player_separation_strength
 	
 	# Alignment velocity calcs
-	self.linear_velocity.x += (x_vel_avg - self.linear_velocity.x) * alignment_strength
-	self.linear_velocity.y += (y_vel_avg - self.linear_velocity.y) * alignment_strength
+	linear_velocity.x += (x_vel_avg - linear_velocity.x) * alignment_strength
+	linear_velocity.y += (y_vel_avg - linear_velocity.y) * alignment_strength
 	
 	# Cohesion velocity calcs
-	self.linear_velocity.x += (x_pos_avg - self.position.x) * centering_strength
-	self.linear_velocity.y += (y_pos_avg - self.position.y) * centering_strength
+	linear_velocity.x += (x_pos_avg - position.x) * centering_strength
+	linear_velocity.y += (y_pos_avg - position.y) * centering_strength
 	
 	# Speed constraints
-	var speed = sqrt(self.linear_velocity.x*self.linear_velocity.x + self.linear_velocity.y*self.linear_velocity.y)
+	var speed = sqrt(linear_velocity.x*linear_velocity.x + linear_velocity.y*linear_velocity.y)
 	if speed > max_speed:
-		self.linear_velocity.x = (self.linear_velocity.x/speed)*max_speed
-		self.linear_velocity.y = (self.linear_velocity.y/speed)*min_speed
+		linear_velocity.x = (linear_velocity.x/speed)*max_speed
+		linear_velocity.y = (linear_velocity.y/speed)*min_speed
 	if speed < min_speed:
-		self.linear_velocity.x = (self.linear_velocity.x/speed)*min_speed
-		self.linear_velocity.y = (self.linear_velocity.y/speed)*min_speed
+		linear_velocity.x = (linear_velocity.x/speed)*min_speed
+		linear_velocity.y = (linear_velocity.y/speed)*min_speed
 	
 	# Sprite rotation update
 	sprite.rotation = lerp_angle(sprite.rotation, linear_velocity.angle(), 0.75)
 
 	# Final position update
-	self.position.x = self.position.x + self.linear_velocity.x
-	self.position.y = self.position.y + self.linear_velocity.y
+	position.x = position.x + linear_velocity.x
+	position.y = position.y + linear_velocity.y
 	
