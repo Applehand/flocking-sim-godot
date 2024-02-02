@@ -1,19 +1,119 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvv1j1nmdj4et"]
+[gd_scene load_steps=19 format=3 uid="uid://dvv1j1nmdj4et"]
 
 [ext_resource type="Script" path="res://scripts/Boid.gd" id="1_rcn3p"]
-[ext_resource type="Texture2D" uid="uid://d2bova7umpsta" path="res://icon.svg" id="2_afch4"]
+[ext_resource type="Texture2D" uid="uid://ctv02fgv56iar" path="res://resources/Jellyfish Sprite Sheet.png" id="2_0tnwt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2kkgw"]
-radius = 264.002
+radius = 319.056
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fpqhn"]
-radius = 61.0082
+radius = 76.0066
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4ht1"]
-radius = 28.0
-height = 60.0
+radius = 20.0
+height = 40.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gdb7"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q18b0"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jq0b5"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aia4r"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hf2qi"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(128, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgv15"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqcqp"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6re01"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4cqj"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xoqd1"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(128, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0ysk"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(160, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6dij"]
+atlas = ExtResource("2_0tnwt")
+region = Rect2(192, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j4gxq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gdb7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q18b0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jq0b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aia4r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hf2qi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgv15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqcqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6re01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4cqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xoqd1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0ysk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6dij")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}]
 
 [node name="Boid" type="RigidBody2D"]
+rotation = 1.5708
+max_contacts_reported = 4
+contact_monitor = true
 script = ExtResource("1_rcn3p")
 
 [node name="VisualRange" type="Area2D" parent="."]
@@ -29,17 +129,15 @@ shape = SubResource("CircleShape2D_fpqhn")
 [node name="BodyCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_y4ht1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_afch4")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 2)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_j4gxq")
+autoplay = "default"
 
-[node name="Label" type="Label" parent="."]
-offset_left = -19.0
-offset_top = -40.0
-offset_right = 21.0
-offset_bottom = -17.0
-
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="VisualRange" to="." method="_on_visual_range_entered"]
 [connection signal="body_exited" from="VisualRange" to="." method="_on_visual_range_exited"]
 [connection signal="body_entered" from="ProtectedRange" to="." method="_on_protected_range_entered"]
 [connection signal="body_exited" from="ProtectedRange" to="." method="_on_protected_range_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_death_anim_finished"]

@@ -1,10 +1,10 @@
 extends RigidBody2D
 class_name Boid
+signal got_eaten
 
 @onready var visual_range = $VisualRange
 @onready var protected_range = $ProtectedRange
-@onready var label: Label = $Label
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @export var min_speed: int = 4
 @export var max_speed: int = 8
@@ -17,6 +17,7 @@ class_name Boid
 var boids_in_visual_range: Array[Boid]
 var boids_in_protected_range: Array[Boid]
 var player_body: CharacterBody2D
+var has_been_eaten: bool = false
 
 
 func _physics_process(_delta):
@@ -47,14 +48,14 @@ func _on_protected_range_exited(body) -> void:
 		boids_in_protected_range.erase(body)
 
 
-func calculate_position(player_body):
+func calculate_position(player):
 	var x_pos_avg: float = 0
 	var y_pos_avg: float = 0
 	var x_vel_avg: float = 0
 	var y_vel_avg: float = 0
 	var num_boids_in_vision: int = len(boids_in_visual_range)
-	var sep_dist_x: int = 0
-	var sep_dist_y: int = 0
+	var sep_dist_x: float = 0.0
+	var sep_dist_y: float = 0.0
 	var player_sep_dist_x: int = 0
 	var player_sep_dist_y: int = 0
 	
@@ -63,10 +64,10 @@ func calculate_position(player_body):
 		sep_dist_x += position.x - boid.position.x
 		sep_dist_y += position.y - boid.position.y
 	
-	# Also avoiding the player, if visible
-	if player_body:
-		player_sep_dist_x += position.x - player_body.position.x
-		player_sep_dist_y += position.y - player_body.position.y
+	# If the player body exists, then the boid will avoid it
+	if player:
+		player_sep_dist_x += position.x - player.position.x
+		player_sep_dist_y += position.y - player.position.y
 	
 	# Getting average positions and velocities for boids in view
 	for boid in boids_in_visual_range:
@@ -104,9 +105,19 @@ func calculate_position(player_body):
 		linear_velocity.y = (linear_velocity.y/speed)*min_speed
 	
 	# Sprite rotation update
-	sprite.rotation = lerp_angle(sprite.rotation, linear_velocity.angle(), 0.75)
+	sprite.rotation = lerp_angle(sprite.rotation, linear_velocity.angle(), 1)
 
 	# Final position update
 	position.x = position.x + linear_velocity.x
 	position.y = position.y + linear_velocity.y
-	
+
+
+func _on_body_entered(body: PhysicsBody2D) -> void:
+	if body is CharacterBody2D and has_been_eaten == false:
+		has_been_eaten = true
+		got_eaten.emit()
+		sprite.play('die')
+
+
+func _on_death_anim_finished():
+	queue_free()

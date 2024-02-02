@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpyt08hhukwp5"]
+[gd_scene load_steps=9 format=3 uid="uid://dpyt08hhukwp5"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_d3sgk"]
 [ext_resource type="PackedScene" uid="uid://dh1ltvja45grq" path="res://scenes/player.tscn" id="2_g0xw7"]
+[ext_resource type="PackedScene" uid="uid://b8e2nar26evr6" path="res://scenes/ui_main.tscn" id="2_raeft"]
+[ext_resource type="PackedScene" uid="uid://b4u1f2kqnm6ic" path="res://scenes/ui_menu.tscn" id="3_cgps1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86cxv"]
 
@@ -12,11 +14,17 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mcioo"]
 
 [node name="main" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_d3sgk")
-num_boids = 40
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ui_main" parent="CanvasLayer" instance=ExtResource("2_raeft")]
+
+[node name="ui_menu" parent="CanvasLayer" instance=ExtResource("3_cgps1")]
 
 [node name="LeftBorder" type="StaticBody2D" parent="."]
-constant_linear_velocity = Vector2(10, 2.08165e-12)
+constant_linear_velocity = Vector2(5, 2.08165e-12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBorder"]
 shape = SubResource("RectangleShape2D_86cxv")
@@ -28,13 +36,13 @@ constant_linear_velocity = Vector2(2.08165e-12, 10)
 shape = SubResource("RectangleShape2D_jju1f")
 
 [node name="RightBorder" type="StaticBody2D" parent="."]
-constant_linear_velocity = Vector2(-10, 2.08165e-12)
+constant_linear_velocity = Vector2(-5, 2.08165e-12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightBorder"]
 shape = SubResource("RectangleShape2D_ccfog")
 
 [node name="BottomBorder" type="StaticBody2D" parent="."]
-constant_linear_velocity = Vector2(2.08165e-12, -10)
+constant_linear_velocity = Vector2(2.08165e-12, -5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBorder"]
 shape = SubResource("RectangleShape2D_mcioo")
