@@ -1,17 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://dvv1j1nmdj4et"]
+[gd_scene load_steps=20 format=3 uid="uid://dvv1j1nmdj4et"]
 
 [ext_resource type="Script" path="res://scripts/Boid.gd" id="1_rcn3p"]
 [ext_resource type="Texture2D" uid="uid://ctv02fgv56iar" path="res://resources/Jellyfish Sprite Sheet.png" id="2_0tnwt"]
+[ext_resource type="AudioStream" uid="uid://dq8q8sxbp3p" path="res://resources/pop-39222.mp3" id="3_e437x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2kkgw"]
-radius = 319.056
+radius = 219.002
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fpqhn"]
-radius = 76.0066
+radius = 54.037
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4ht1"]
-radius = 20.0
-height = 40.0
+radius = 14.0
+height = 42.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7gdb7"]
 atlas = ExtResource("2_0tnwt")
@@ -107,10 +108,11 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 5.0
+"speed": 15.0
 }]
 
 [node name="Boid" type="RigidBody2D"]
+process_mode = 3
 rotation = 1.5708
 max_contacts_reported = 4
 contact_monitor = true
@@ -127,13 +129,19 @@ shape = SubResource("CircleShape2D_2kkgw")
 shape = SubResource("CircleShape2D_fpqhn")
 
 [node name="BodyCollision" type="CollisionShape2D" parent="."]
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_y4ht1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, 2)
-scale = Vector2(4, 4)
+rotation = 1.5708
+scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_j4gxq")
+animation = &"die"
 autoplay = "default"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_e437x")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="VisualRange" to="." method="_on_visual_range_entered"]

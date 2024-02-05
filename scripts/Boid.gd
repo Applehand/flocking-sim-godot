@@ -5,9 +5,10 @@ signal got_eaten
 @onready var visual_range = $VisualRange
 @onready var protected_range = $ProtectedRange
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var body_collision = $BodyCollision
 
-@export var min_speed: int = 4
-@export var max_speed: int = 8
+@export var min_speed: int = 3
+@export var max_speed: int = 6
 @export var turning_speed: int = 2
 @export var separation_strength: float = 0.002
 @export var alignment_strength: float = 0.0025
@@ -105,7 +106,7 @@ func calculate_position(player):
 		linear_velocity.y = (linear_velocity.y/speed)*min_speed
 	
 	# Sprite rotation update
-	sprite.rotation = lerp_angle(sprite.rotation, linear_velocity.angle(), 1)
+	rotation = lerp_angle(rotation, linear_velocity.angle(), 1)
 
 	# Final position update
 	position.x = position.x + linear_velocity.x
@@ -117,6 +118,7 @@ func _on_body_entered(body: PhysicsBody2D) -> void:
 		has_been_eaten = true
 		got_eaten.emit()
 		sprite.play('die')
+		%AudioStreamPlayer2D.playing = true
 
 
 func _on_death_anim_finished():

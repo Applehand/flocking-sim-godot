@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://b8e2nar26evr6"]
+[gd_scene load_steps=3 format=3 uid="uid://b8e2nar26evr6"]
+
+[ext_resource type="Script" path="res://scripts/ui_main.gd" id="1_u5pu2"]
+[ext_resource type="AudioStream" uid="uid://dcht63sde24c4" path="res://resources/click-21156.mp3" id="2_vwo63"]
 
 [node name="ui_main" type="Control"]
 layout_mode = 3
@@ -7,8 +10,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_u5pu2")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="ScoreContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -21,10 +25,53 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="Label" type="Label" parent="MarginContainer"]
+[node name="Label" type="Label" parent="ScoreContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 24
 text = "Boids Bopped: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StartButtonContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 100
+
+[node name="Button" type="Button" parent="StartButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "BOP THEM BOIDS"
+
+[node name="CountdownLabelContainer" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CountdownLabelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "3.. 2.. 1.."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_vwo63")
+
+[connection signal="pressed" from="StartButtonContainer/Button" to="." method="_on_button_pressed"]

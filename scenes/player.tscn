@@ -1,32 +1,22 @@
 [gd_scene load_steps=4 format=3 uid="uid://dh1ltvja45grq"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_hmxu5"]
-[ext_resource type="Texture2D" uid="uid://b3kdt4nv7yx3b" path="res://resources/player_fish.png" id="2_hw6ln"]
+[ext_resource type="Texture2D" uid="uid://bcvrbbmlfk0ob" path="res://resources/fishTile_079.png" id="2_yplac"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uhuou"]
-radius = 17.0
-height = 54.0
+radius = 19.0
+height = 38.0
 
 [node name="player" type="CharacterBody2D"]
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_hmxu5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-22, 4)
+position = Vector2(-14, 2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_uhuou")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-3, -4)
-rotation = 0.265545
-scale = Vector2(0.15, 0.15)
-texture = ExtResource("2_hw6ln")
-
-[node name="DashTimer" type="Timer" parent="."]
-
-[node name="StartTimer" type="Timer" parent="."]
-wait_time = 4.0
-autostart = true
-
-[connection signal="timeout" from="DashTimer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+texture = ExtResource("2_yplac")
+flip_h = true

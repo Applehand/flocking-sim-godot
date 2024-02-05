@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpyt08hhukwp5"]
+[gd_scene load_steps=8 format=3 uid="uid://dpyt08hhukwp5"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_d3sgk"]
 [ext_resource type="PackedScene" uid="uid://dh1ltvja45grq" path="res://scenes/player.tscn" id="2_g0xw7"]
 [ext_resource type="PackedScene" uid="uid://b8e2nar26evr6" path="res://scenes/ui_main.tscn" id="2_raeft"]
-[ext_resource type="PackedScene" uid="uid://b4u1f2kqnm6ic" path="res://scenes/ui_menu.tscn" id="3_cgps1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86cxv"]
 
@@ -14,37 +13,78 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mcioo"]
 
 [node name="main" type="Node2D"]
-process_mode = 1
+process_mode = 3
 script = ExtResource("1_d3sgk")
+num_boids = 35
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="BackgroundCanvas" type="CanvasLayer" parent="."]
+layer = -1
 
-[node name="ui_main" parent="CanvasLayer" instance=ExtResource("2_raeft")]
+[node name="Control" type="Control" parent="BackgroundCanvas"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ui_menu" parent="CanvasLayer" instance=ExtResource("3_cgps1")]
+[node name="ColorRect" type="ColorRect" parent="BackgroundCanvas/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.180392, 0.584314, 1, 1)
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="ui_main" parent="UICanvas" instance=ExtResource("2_raeft")]
 
 [node name="LeftBorder" type="StaticBody2D" parent="."]
+collision_layer = 3
 constant_linear_velocity = Vector2(5, 2.08165e-12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBorder"]
 shape = SubResource("RectangleShape2D_86cxv")
 
 [node name="TopBorder" type="StaticBody2D" parent="."]
+collision_layer = 3
 constant_linear_velocity = Vector2(2.08165e-12, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopBorder"]
 shape = SubResource("RectangleShape2D_jju1f")
 
 [node name="RightBorder" type="StaticBody2D" parent="."]
+collision_layer = 3
 constant_linear_velocity = Vector2(-5, 2.08165e-12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightBorder"]
 shape = SubResource("RectangleShape2D_ccfog")
 
 [node name="BottomBorder" type="StaticBody2D" parent="."]
+collision_layer = 3
 constant_linear_velocity = Vector2(2.08165e-12, -5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBorder"]
 shape = SubResource("RectangleShape2D_mcioo")
 
 [node name="player" parent="." instance=ExtResource("2_g0xw7")]
+process_mode = 1
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+
+[node name="ScoreTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Node" type="Node" parent="."]
+
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
